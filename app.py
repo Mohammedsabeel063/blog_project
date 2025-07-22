@@ -2,6 +2,10 @@ import os
 from flask import Flask, request, render_template, session, send_from_directory
 from posthog import Posthog
 from blog_generator import generate_blog
+from dotenv import load_dotenv
+
+load_dotenv()  # This loads .env locally, does nothing on Render
+openai.api_key = os.environ['API_KEY']
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
