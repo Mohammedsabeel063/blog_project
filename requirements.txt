@@ -1,10 +1,5 @@
-openai
-flask
-python-dotenv
-posthog
-gunicorn
 Flask==3.1.1
-openai==1.97.1
-python-dotenv==1.1.1
-posthog==6.3.0
-gunicorn==23.0.0
+openai==1.7.1
+python-dotenv==1.0.1
+posthog==3.0.2
+gunicorn==21.2.0
