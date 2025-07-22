@@ -2,10 +2,13 @@ import os
 from flask import Flask, request, render_template, session, send_from_directory
 from posthog import Posthog
 from blog_generator import generate_blog
-from dotenv import load_dotenv
+import openai
 
-load_dotenv()  # This loads .env locally, does nothing on Render
-openai.api_key = os.environ['API_KEY']
+# Read environment variables (Render handles this)
+api_key = os.environ.get('API_KEY')
+if not api_key:
+    raise RuntimeError("API_KEY environment variable not set")
+openai.api_key = api_key
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
@@ -74,6 +77,6 @@ def history():
 def download_blog(filename):
     return send_from_directory('blogs', filename, as_attachment=True)
 
-# Run the app
+# Run locally
 if __name__ == '__main__':
     app.run(debug=True)
