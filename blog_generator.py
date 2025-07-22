@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -28,14 +27,4 @@ def generate_blog(topic, tone='Informative', language='English', full=False):
         max_tokens=800
     )
 
-    blog_content = response.choices[0].message.content.strip()
-    save_blog_to_file(topic, blog_content)
-    return blog_content
-
-def save_blog_to_file(topic, content):
-    now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    safe_topic = "_".join(topic.lower().split())[:30]
-    filename = f"{safe_topic}_{now}.txt"
-    os.makedirs("blogs", exist_ok=True)
-    with open(os.path.join("blogs", filename), "w", encoding="utf-8") as f:
-        f.write(content)
+    return response.choices[0].message.content.strip()
