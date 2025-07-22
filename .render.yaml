@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: blog-generator
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: API_KEY
+      - key: POSTHOG_API_KEY
+      - key: POSTHOG_HOST
+      - key: SECRET_KEY
