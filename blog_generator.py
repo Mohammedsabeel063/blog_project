@@ -2,27 +2,12 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Ensure the API key is present
-if not os.getenv("OPENAI_API_KEY"):
-    raise RuntimeError("OPENAI_API_KEY not set in environment variables")
-
-# Initialize OpenAI client using environment variable (SDK handles key automatically)
+# Safely initialize OpenAI with API key
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-
 def generate_blog(topic, tone='Informative', language='English', full=False):
-    """
-    Generates a blog based on user inputs.
-    
-    :param topic: Blog topic
-    :param tone: Writing tone (e.g., 'Formal', 'Casual', etc.)
-    :param language: Language to generate the blog in
-    :param full: If True, generate full blog; else short paragraph
-    :return: Generated blog content
-    """
     prompt = (
         f"Write a blog post in {language} titled '{topic}' with introduction, body, and conclusion in a {tone} tone."
         if full else
