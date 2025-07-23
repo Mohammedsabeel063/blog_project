@@ -10,7 +10,8 @@ if not os.getenv("OPENAI_API_KEY"):
     raise RuntimeError("OPENAI_API_KEY not set in environment variables")
 
 # Initialize OpenAI client using environment variable (SDK handles key automatically)
-client = OpenAI()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 
 def generate_blog(topic, tone='Informative', language='English', full=False):
     """
