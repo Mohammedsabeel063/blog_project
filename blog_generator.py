@@ -1,11 +1,11 @@
 import os
-from openai import OpenAI
+import openai
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Safely initialize OpenAI with API key
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Set API key globally for openai package
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_blog(topic, tone='Informative', language='English', full=False):
     prompt = (
@@ -14,7 +14,7 @@ def generate_blog(topic, tone='Informative', language='English', full=False):
         f"Write a short paragraph in {language} about '{topic}' in a {tone} tone."
     )
 
-    response = client.chat.completions.create(
+    response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful blog writing assistant."},
