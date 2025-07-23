@@ -2,29 +2,35 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
+# Load environment variables from .env
 load_dotenv()
 
-# Correct and minimal OpenAI client initialization
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"),
-    base_url="https://api.openai.com/v1"  # Explicitly specify default base URL
-)
+# Check if API key is set
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise RuntimeError("OPENAI_API_KEY not found in environment variables.")
+
+# ✅ Initialize the OpenAI client with only the api_key
+client = OpenAI(api_key=api_key)
 
 def generate_blog(topic, tone='Informative', language='English', full=False):
     prompt = (
-        f"Write a blog post in {language} titled '{topic}' with introduction, body, and conclusion in a {tone} tone."
+        f"Write a blog post in {language} titled '{topic}' with an introduction, body, and conclusion in a {tone} tone."
         if full else
         f"Write a short paragraph in {language} about '{topic}' in a {tone} tone."
     )
 
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful blog writing assistant."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.7,
-        max_tokens=800
-    )
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful blog writing assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=800
+        )
+        return response.choices[0].message.content.strip()
 
-    return response.choices[0].message.content.strip()
+    except Exception as e:
+        return f"⚠️ Error generating blog: {e}"
