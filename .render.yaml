@@ -9,3 +9,12 @@ services:
       - key: POSTHOG_API_KEY
       - key: POSTHOG_HOST
       - key: SECRET_KEY
+
+# render.yaml
+services:
+  - type: web
+    name: blog-generator
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    pythonVersion: 3.11
