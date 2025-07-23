@@ -4,11 +4,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-api_key = os.getenv("OPENAI_API_KEY")
-if not api_key:
+# Ensure the environment variable is set
+if not os.getenv("OPENAI_API_KEY"):
     raise RuntimeError("OPENAI_API_KEY not set in environment variables")
 
-client = OpenAI(api_key=api_key)
+# Initialize OpenAI client (no arguments!)
+client = OpenAI()
 
 def generate_blog(topic, tone='Informative', language='English', full=False):
     prompt = (
