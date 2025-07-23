@@ -11,7 +11,7 @@ if not api_key:
     raise RuntimeError("OPENAI_API_KEY not found in environment variables.")
 
 # ✅ Correct way to initialize client with API key using the default client
-client = OpenAI()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_blog(topic, tone='Informative', language='English', full=False):
     prompt = (
