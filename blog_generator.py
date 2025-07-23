@@ -4,7 +4,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Correct and minimal OpenAI client initialization
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    base_url="https://api.openai.com/v1"  # Explicitly specify default base URL
+)
 
 def generate_blog(topic, tone='Informative', language='English', full=False):
     prompt = (
