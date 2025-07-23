@@ -5,13 +5,13 @@ from dotenv import load_dotenv
 # Load environment variables from .env
 load_dotenv()
 
-# Check if API key is set
+# Get the OpenAI API key
 api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     raise RuntimeError("OPENAI_API_KEY not found in environment variables.")
 
-# ✅ Initialize the OpenAI client with only the api_key
-client = OpenAI(api_key=api_key)
+# ✅ Correct way to initialize client with API key using the default client
+client = OpenAI()
 
 def generate_blog(topic, tone='Informative', language='English', full=False):
     prompt = (
@@ -31,6 +31,5 @@ def generate_blog(topic, tone='Informative', language='English', full=False):
             max_tokens=800
         )
         return response.choices[0].message.content.strip()
-
     except Exception as e:
         return f"⚠️ Error generating blog: {e}"
