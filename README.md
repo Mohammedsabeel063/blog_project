@@ -48,4 +48,14 @@ The app supports content history, session tracking via PostHog, and downloadable
 
 The app uses OpenAI's `gpt-3.5-turbo` model to generate blog content. The logic is inside `blog_generator.py`, which takes user input and dynamically builds a prompt for the AI.
 
-### Example prompt:
+## 🖼️ Screenshots & Demo
+
+### Homepage
+![Homepage Screenshot](screenshots/homepage.png)
+
+### History Page
+![History Screenshot](screenshots/history_page.png)
+
+### Blog Generation Demo
+![Blog Generation GIF](screenshots/blog_generation.gif)
+
