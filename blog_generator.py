@@ -1,5 +1,5 @@
 import os
-from openai import OpenAI
+import openai
 from dotenv import load_dotenv
 
 # Load environment variables from .env
@@ -10,8 +10,8 @@ api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     raise RuntimeError("OPENAI_API_KEY not found in environment variables.")
 
-# ✅ Correct way to initialize client with API key using the default client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Set the OpenAI API key globally
+openai.api_key = api_key
 
 def generate_blog(topic, tone='Informative', language='English', full=False):
     prompt = (
@@ -21,7 +21,7 @@ def generate_blog(topic, tone='Informative', language='English', full=False):
     )
 
     try:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful blog writing assistant."},
